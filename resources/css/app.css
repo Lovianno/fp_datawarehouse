@@ -1,0 +1,18 @@
+/* Bootstrap */
+@import "bootstrap/scss/bootstrap";
+
+/* Bootstrap Icons */
+@import "bootstrap-icons/font/bootstrap-icons.css";
+
+/* Boxicons */
+@import "boxicons/css/boxicons.min.css";
+
+/* Sneat Core */
+@import "../sneat/css/core.css";
+@import "../sneat/css/theme-default.css";
+
+/* Sneat Pages */
+@import "../sneat/css/pages/page-account-settings.css";
+@import "../sneat/css/pages/page-auth.css";
+@import "../sneat/css/pages/page-icons.css";
+@import "../sneat/css/pages/page-misc.css";
