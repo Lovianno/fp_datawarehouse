@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class PelangganSeeder extends Seeder
+class DimPelangganSeeder extends Seeder
 {
     public function run(): void
     {
@@ -30,15 +30,15 @@ class PelangganSeeder extends Seeder
         $rows = [];
         foreach ($data as [$kode, $nama, $gender, $kota]) {
             $rows[] = [
-                'kode_pelanggan'  => $kode,
-                'nama_pelanggan'  => $nama,
-                'jenis_kelamin'   => $gender,
-                'kota'            => $kota,
-                'created_at'      => now(),
-                'updated_at'      => now(),
+                'kode_pelanggan' => $kode,
+                'nama_pelanggan' => $nama,
+                'jenis_kelamin'  => $gender,
+                'kota'           => $kota,
+                'created_at'     => now(),
+                'updated_at'     => now(),
             ];
         }
 
-        DB::table('pelanggan')->insert($rows);
+        DB::table('dim_pelanggan')->insert($rows);
     }
 }

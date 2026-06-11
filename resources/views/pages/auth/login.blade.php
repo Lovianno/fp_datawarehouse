@@ -8,7 +8,7 @@
 			<div class="border-0 rounded-4 p-4">
 				<div class="text-center mb-4">
 					<a href="/" class="d-inline-flex align-items-center gap-2 text-decoration-none mb-2">
-						<img src="{{ asset('assets/img/logo/Logo Simken.svg') }}" alt="Logo" width="48"
+						<img src="{{ asset('assets/img/logo/Logo Megastore.png') }}" alt="Logo" width="48"
 							class="rounded-circle shadow-sm border">
 						<span class="fw-bold text-app-primary fs-4" style="letter-spacing:2px;">Mega Store </span>
 					</a>

@@ -5,7 +5,7 @@
         <a href="{{ route('dashboard') }}" class="app-brand-link d-flex align-items-center text-decoration-none">
             <div class="logo w-100 ">
                     <a href="/">
-                        <img src="{{ asset('assets/img/logo/Logo Full Simken.svg') }}" alt="Logo"
+                        <img src="{{ asset('assets/img/logo/Logo Full Megastore.png') }}" alt="Logo"
                             class=" w-100 object-contain" style="height: auto">
                     </a>
                 </div>
@@ -51,37 +51,30 @@
                     <div>Data Pengguna</div>
                 </a>
             </li>
-              <!-- Kendaraan -->
-            <li class="menu-item {{ request()->routeIs('vehicles.*') ? 'active' : '' }}">
-                <a href="{{ route('vehicles.index') }}" class="menu-link text-decoration-none">
-                    <i class="menu-icon tf-icons bi bi-car-front"></i>
-                    <div>Data Kendaraan</div>
+            <!-- Produk -->
+            <li class="menu-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+                <a href="{{ route('dashboard') }}" class="menu-link text-decoration-none">
+                    <i class="menu-icon tf-icons bi bi-box-seam"></i>
+                    <div>Data Produk</div>
                 </a>
             </li>
-            <!-- Onderdil -->
-            <li class="menu-item {{ request()->routeIs('parts.*') ? 'active' : '' }}">
-                <a href="{{ route('parts.index') }}" class="menu-link text-decoration-none">
-                    <i class="menu-icon tf-icons bi bi-wrench"></i>
-                    <div>Data Suku Cadang</div>
+            <!-- Pelanggan -->
+            <li class="menu-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+                <a href="{{ route('dashboard') }}" class="menu-link text-decoration-none">
+                    <i class="menu-icon tf-icons bi bi-person-check"></i>
+                    <div>Data Pelanggan</div>
                 </a>
             </li>
 
-              <!-- Master Data -->
+            <!-- Transaksi -->
             <li class="menu-header small text-uppercase">
-                <span class="menu-header-text">Laporan</span>
+                <span class="menu-header-text">Transaksi</span>
             </li>
-            <!-- Perbaikan Kendaraan -->
-            <li class="menu-item {{ request()->routeIs('reports.*') ? 'active' : '' }}">
-                <a href="{{ route('reports.index') }}" class="menu-link text-decoration-none">
-                    <i class="menu-icon tf-icons bi bi-tools"></i>
-                    <div>Perbaikan Kendaraan</div>
-                </a>
-            </li>
-            <!-- Riwayat Stok -->
-            <li class="menu-item {{ request()->routeIs('stock_movements.*') ? 'active' : '' }}">
-                <a href="{{ route('stock_movements.index') }}" class="menu-link text-decoration-none">
-                    <i class="menu-icon tf-icons bi bi-hourglass-split"></i>
-                    <div>Riwayat Stok</div>
+            <!-- Penjualan -->
+            <li class="menu-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+                <a href="{{ route('dashboard') }}" class="menu-link text-decoration-none">
+                    <i class="menu-icon tf-icons bi bi-receipt"></i>
+                    <div>Penjualan</div>
                 </a>
             </li>
           
