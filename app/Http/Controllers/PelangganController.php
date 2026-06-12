@@ -4,15 +4,29 @@ namespace App\Http\Controllers;
 
 use App\Models\Pelanggan;
 use Illuminate\Http\Request;
+use App\Http\Requests\PelangganRequest;
+use App\Services\PelangganService;
 
 class PelangganController extends Controller
 {
+    public function __construct(private PelangganService $pelangganService) {}
+
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $search = $request->query('search');
+        $pelanggans = $this->pelangganService->getAll($search);
+
+        $currentPage = $pelanggans->currentPage();
+        $lastPage    = $pelanggans->lastPage();
+        $perPage     = $pelanggans->perPage();
+        $total       = $pelanggans->total();
+
+        return view('pages.admin.pelanggan.index', compact(
+            'pelanggans', 'search', 'currentPage', 'lastPage', 'perPage', 'total'
+        ));
     }
 
     /**
@@ -20,15 +34,20 @@ class PelangganController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.admin.pelanggan.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(PelangganRequest $request)
     {
-        //
+        try {
+            $this->pelangganService->create($request->validated());
+            return redirect()->route('pelanggan.index')->with('success', 'Data Pelanggan berhasil ditambahkan.');
+        } catch (\Exception $e) {
+            return redirect()->back()->withInput()->withErrors(['error' => 'Terjadi kesalahan. Silakan coba lagi.']);
+        }
     }
 
     /**
@@ -36,7 +55,7 @@ class PelangganController extends Controller
      */
     public function show(Pelanggan $pelanggan)
     {
-        //
+        return view('pages.admin.pelanggan.show', compact('pelanggan'));
     }
 
     /**
@@ -44,15 +63,20 @@ class PelangganController extends Controller
      */
     public function edit(Pelanggan $pelanggan)
     {
-        //
+        return view('pages.admin.pelanggan.edit', compact('pelanggan'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Pelanggan $pelanggan)
+    public function update(PelangganRequest $request, Pelanggan $pelanggan)
     {
-        //
+        try {
+            $this->pelangganService->update($pelanggan, $request->validated());
+            return redirect()->route('pelanggan.index')->with('success', 'Data Pelanggan berhasil diperbarui.');
+        } catch (\Exception $e) {
+            return redirect()->back()->withInput()->withErrors(['error' => 'Terjadi kesalahan. Silakan coba lagi.']);
+        }
     }
 
     /**
@@ -60,6 +84,7 @@ class PelangganController extends Controller
      */
     public function destroy(Pelanggan $pelanggan)
     {
-        //
+        $this->pelangganService->delete($pelanggan);
+        return redirect()->route('pelanggan.index')->with('success', 'Data Pelanggan berhasil dihapus.');
     }
 }
