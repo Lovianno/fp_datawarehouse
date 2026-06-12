@@ -26,14 +26,14 @@
                             </h4>
 
                             <p class="mb-0 opacity-75 small">
-                                Sistem Informasi Maintanance Kendaraan
+                                Sistem Informasi Manajemen Produk
                             </p>
                         </div>
 
-                        <img src="{{ asset('assets/img/logo/Logo Simken.svg') }}"
+                        <img src="{{ asset('assets/img/logo/Logo Full Megastore.png') }}"
                             class="img-fluid d-none d-sm-block"
                             style="max-height: 60px;"
-                            alt="SIMKEN">
+                            alt="MEGASTORE">
                     </div>
                 </div>
             </div>

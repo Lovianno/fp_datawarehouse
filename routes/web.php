@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -12,8 +13,10 @@ Route::get('/', function () {
 
 Route::middleware(['auth'])->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        
+        Route::resource('/users', UserController::class)->names('users');
 
-               Route::resource('/users', UserController::class)->names('users');
+        Route::resource('/penjualan', PenjualanController::class)->names('penjualan');
 
     });
 

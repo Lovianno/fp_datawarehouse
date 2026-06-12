@@ -1,26 +1,28 @@
 // Bootstrap bawaan Laravel
-import './bootstrap';
-
-// Load SCSS
-// import '../scss/app.scss';
+import "./bootstrap";
 
 // Bootstrap core JS
-import 'bootstrap';
+import * as bootstrap from "bootstrap";
+window.bootstrap = bootstrap;
 
 /* Sneat Core */
-import '../sneat/js/helpers.js';
-import '../sneat/js/config.js';
-import '../sneat/js/menu.js';
-import '../sneat/js/main.js';
+import "../sneat/js/helpers.js";
+import "../sneat/js/config.js";
+import "../sneat/js/menu.js";
+import "../sneat/js/ui-toasts.js";
+import "../sneat/js/ui-popover.js";
+import "../sneat/js/pages-account-settings-account.js";
+import "../sneat/js/extended-ui-perfect-scrollbar.js";
+import "../sneat/js/main.js";
 
-/* Log untuk debug */
-console.log("Sneat Loaded:", {
-    helpers: typeof window.Helpers !== "undefined",
+
+document.addEventListener("DOMContentLoaded", () => {
+    if (
+        typeof window.Helpers !== "undefined" &&
+        typeof window.Helpers.initSidebarToggle === "function"
+    ) {
+        window.Helpers.initSidebarToggle();
+    }
+
+   
 });
-
-/* Vendor tambahan (load HANYA jika butuh chart atau scrollbar) */
-// import PerfectScrollbar from 'perfect-scrollbar';
-// import ApexCharts from 'apexcharts';
-
-// window.PerfectScrollbar = PerfectScrollbar;
-// window.ApexCharts = ApexCharts;

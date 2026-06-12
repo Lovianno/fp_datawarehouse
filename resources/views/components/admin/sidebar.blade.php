@@ -71,8 +71,8 @@
                 <span class="menu-header-text">Transaksi</span>
             </li>
             <!-- Penjualan -->
-            <li class="menu-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
-                <a href="{{ route('dashboard') }}" class="menu-link text-decoration-none">
+            <li class="menu-item {{ request()->routeIs('penjualan.*') ? 'active' : '' }}">
+                <a href="{{ route('penjualan.index') }}" class="menu-link text-decoration-none">
                     <i class="menu-icon tf-icons bi bi-receipt"></i>
                     <div>Penjualan</div>
                 </a>
