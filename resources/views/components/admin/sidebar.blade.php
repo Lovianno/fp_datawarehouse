@@ -59,8 +59,8 @@
                 </a>
             </li>
             <!-- Pelanggan -->
-            <li class="menu-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
-                <a href="{{ route('dashboard') }}" class="menu-link text-decoration-none">
+            <li class="menu-item {{ request()->routeIs('pelanggan.*') ? 'active' : '' }}">
+                <a href="{{ route('pelanggan.index') }}" class="menu-link text-decoration-none">
                     <i class="menu-icon tf-icons bi bi-person-check"></i>
                     <div>Data Pelanggan</div>
                 </a>
