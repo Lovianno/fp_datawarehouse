@@ -6,5 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Produk extends Model
 {
-    //
+    protected $table = 'produk';
+    protected $primaryKey = 'id_produk';
+
+    protected $fillable = [
+        'kode_produk',
+        'nama_produk',
+        'kategori',
+        'harga',
+    ];
+
+    protected $casts = [
+        'harga' => 'decimal:2',
+    ];
 }

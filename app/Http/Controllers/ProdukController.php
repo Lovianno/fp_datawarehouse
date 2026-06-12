@@ -4,62 +4,71 @@ namespace App\Http\Controllers;
 
 use App\Models\Produk;
 use Illuminate\Http\Request;
+use App\Http\Requests\ProdukRequest;
+use App\Services\ProdukService;
 
 class ProdukController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function __construct(private ProdukService $produkService) {}
+
+    public function index(Request $request)
     {
-        //
+        $search = $request->query('search');
+        $produks = $this->produkService->getAll($search);
+
+        $currentPage = $produks->currentPage();
+        $lastPage    = $produks->lastPage();
+        $perPage     = $produks->perPage();
+        $total       = $produks->total();
+
+        return view('pages.admin.produk.index', compact(
+            'produks', 'search', 'currentPage', 'lastPage', 'perPage', 'total'
+        ));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('pages.admin.produk.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(ProdukRequest $request)
     {
-        //
+        try {
+            $this->produkService->create($request->validated());
+            return redirect()->route('produk.index')
+                ->with('success', 'Data Produk berhasil ditambahkan.');
+        } catch (\Exception $e) {
+            return redirect()->back()->withInput()
+                ->withErrors(['error' => 'Terjadi kesalahan saat menambah produk.']);
+        }
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Produk $produk)
     {
-        //
+        return view('pages.admin.produk.show', compact('produk'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Produk $produk)
     {
-        //
+        return view('pages.admin.produk.edit', compact('produk'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Produk $produk)
+    public function update(ProdukRequest $request, Produk $produk)
     {
-        //
+        try {
+            $this->produkService->update($produk, $request->validated());
+            return redirect()->route('produk.index')
+                ->with('success', 'Data Produk berhasil diperbarui.');
+        } catch (\Exception $e) {
+            return redirect()->back()->withInput()
+                ->withErrors(['error' => 'Terjadi kesalahan saat memperbarui produk.']);
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Produk $produk)
     {
-        //
+        $this->produkService->delete($produk);
+        return redirect()->route('produk.index')
+            ->with('success', 'Data Produk berhasil dihapus.');
     }
 }
