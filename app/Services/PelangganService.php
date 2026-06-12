@@ -24,7 +24,7 @@ class PelangganService
                       ->orWhere('kode_pelanggan', 'like', "%{$search}%")
                       ->orWhere('kota', 'like', "%{$search}%");
             })
-            ->orderBy('nama_pelanggan')
+            ->orderBy('created_at', 'desc')
             ->paginate(10)
             ->withQueryString();
     }
@@ -43,5 +43,10 @@ class PelangganService
     public function delete(Pelanggan $pelanggan): void
     {
         $pelanggan->delete();
+    }
+
+    public function getPelangganById(int $id): ?Pelanggan
+    {
+        return Pelanggan::where('id_pelanggan', $id)->first();
     }
 }

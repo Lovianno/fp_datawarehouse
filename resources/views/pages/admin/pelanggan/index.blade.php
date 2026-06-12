@@ -69,10 +69,10 @@
                                     <td>{{ $pelanggan->jenis_kelamin === 'L' ? 'Laki-laki' : 'Perempuan' }}</td>
                                     <td>{{ $pelanggan->kota }}</td>
                                     <td class="d-flex justify-content-center gap-2">
-                                        <a href="{{ route('pelanggan.show', $pelanggan) }}" class="btn btn-sm btn-info">
+                                        <a href="{{ route('pelanggan.show', $pelanggan->id_pelanggan) }}" class="btn btn-sm btn-info">
                                             <i class="bi bi-eye"></i> Lihat
                                         </a>
-                                        <a href="{{ route('pelanggan.edit', $pelanggan) }}" class="btn btn-sm btn-warning">
+                                        <a href="{{ route('pelanggan.edit', $pelanggan->id_pelanggan) }}" class="btn btn-sm btn-warning">
                                             <i class="bi bi-pencil"></i> Ubah
                                         </a>
                                         <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
@@ -114,7 +114,7 @@
                                 </div>
                                 <div class="modal-footer border-0 pt-0 px-4 pb-4 d-flex justify-content-end gap-2">
                                     <button type="button" class="btn btn-light border" data-bs-dismiss="modal">Batal</button>
-                                    <form action="{{ route('pelanggan.destroy', $pelanggan) }}" method="POST" class="d-inline">
+                                    <form action="{{ route('pelanggan.destroy', $pelanggan->id_pelanggan) }}" method="POST" class="d-inline">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger px-4 btn-delete">

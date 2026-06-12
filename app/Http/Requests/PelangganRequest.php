@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class PelangganRequest extends FormRequest
 {
@@ -21,12 +22,30 @@ class PelangganRequest extends FormRequest
      */
     public function rules(): array
     {
-        $id = $this->route('pelanggan')?->id_pelanggan;
+       return match ($this->method()) {
+            'POST' => $this->createRules(),
+            'PUT', 'PATCH' => $this->updateRules(),
+            default => [],
+        };
+    }
+
+     protected function createRules(): array
+    {
         return [
-            'kode_pelanggan' => ['required', 'string', 'max:50', 'unique:pelanggan,kode_pelanggan,' . $id . ',id_pelanggan'],
+            'kode_pelanggan' => ['required', 'string', 'max:50', 'unique:pelanggan,kode_pelanggan'],
             'nama_pelanggan' => ['required', 'string', 'max:255'],
             'jenis_kelamin'  => ['required', 'in:L,P'],
             'kota'           => ['required', 'string', 'max:100'],
+        ];
+    }
+
+    protected function updateRules(): array
+    {
+        return [
+          'kode_pelanggan' => ['sometimes','required', 'string', 'max:50', Rule::unique('pelanggan', 'kode_pelanggan')->ignore($this->route('pelanggan'), 'id_pelanggan')],
+            'nama_pelanggan' => ['sometimes','required', 'string', 'max:255'],
+            'jenis_kelamin'  => ['sometimes','required', 'in:L,P'],
+            'kota'           => ['sometimes','required', 'string', 'max:100'],
         ];
     }
 

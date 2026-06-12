@@ -53,24 +53,29 @@ class PelangganController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Pelanggan $pelanggan)
+    public function show(int $id)
     {
+        $pelanggan = $this->pelangganService->getPelangganById($id);
         return view('pages.admin.pelanggan.show', compact('pelanggan'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Pelanggan $pelanggan)
+    public function edit(int $id)
     {
+        $pelanggan = $this->pelangganService->getPelangganById($id);
+
         return view('pages.admin.pelanggan.edit', compact('pelanggan'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(PelangganRequest $request, Pelanggan $pelanggan)
+    public function update(PelangganRequest $request, int $id)
     {
+        $pelanggan = $this->pelangganService->getPelangganById($id);
+        
         try {
             $this->pelangganService->update($pelanggan, $request->validated());
             return redirect()->route('pelanggan.index')->with('success', 'Data Pelanggan berhasil diperbarui.');

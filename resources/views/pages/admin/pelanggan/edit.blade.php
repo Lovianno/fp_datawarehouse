@@ -17,7 +17,7 @@
                 </a>
             </div>
             <div class="card-body">
-                <form action="{{ route('pelanggan.update', $pelanggan) }}" method="POST">
+                <form action="{{ route('pelanggan.update', $pelanggan->id_pelanggan) }}" method="POST">
                     @csrf
                     @method('PUT')
 
