@@ -9,7 +9,10 @@ use App\Services\ProdukService;
 
 class ProdukController extends Controller
 {
+
+
     public function __construct(private ProdukService $produkService) {}
+
 
     public function index(Request $request)
     {
@@ -28,7 +31,8 @@ class ProdukController extends Controller
 
     public function create()
     {
-        return view('pages.admin.produk.create');
+        $kategoriOptions = $this->produkService->getKategoriOptions();
+        return view('pages.admin.produk.create', compact('kategoriOptions'));
     }
 
     public function store(ProdukRequest $request)
@@ -50,7 +54,9 @@ class ProdukController extends Controller
 
     public function edit(Produk $produk)
     {
-        return view('pages.admin.produk.edit', compact('produk'));
+        $kategoriOptions = $this->produkService->getKategoriOptions();
+
+        return view('pages.admin.produk.edit', compact('produk', 'kategoriOptions'));
     }
 
     public function update(ProdukRequest $request, Produk $produk)
