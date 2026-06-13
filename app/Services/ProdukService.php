@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\DB;
 class ProdukService
 {
 
+public function getKategoriOptions(): array
+    {
+        return ['Elektronik', 'Furniture', 'Aksesori', 'Peralatan'];
+    }
+
  public function getProdukOptions()
     {
         return Produk::orderBy('kode_produk')->get();
