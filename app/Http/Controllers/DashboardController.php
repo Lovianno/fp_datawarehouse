@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\FactPenjualan;
 use App\Models\Pelanggan;
 use App\Models\Produk;
+use App\Models\Warehouse;
 
 class DashboardController extends Controller
 {
@@ -29,12 +30,15 @@ class DashboardController extends Controller
         $pendapatanPerBulan = $this->getPenjualanPerbulan();
         $produkTerlaris = $this->getTopProduk();
         $pelangganTerbaik = $this->getPelangganTerbaik();
+      
+        $warehouse = Warehouse::first();
 
         return view('pages.admin.dashboard', compact(
             'stats',
             'produkTerlaris',
             'pendapatanPerBulan',
-            'pelangganTerbaik'
+            'pelangganTerbaik',
+            'warehouse'
         ));
     }
     public function getPenjualanPerbulan()
