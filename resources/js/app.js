@@ -5,7 +5,12 @@ import "./bootstrap";
 import * as bootstrap from "bootstrap";
 window.bootstrap = bootstrap;
 
+// ApexCharts
+import ApexCharts from 'apexcharts';
+window.ApexCharts = ApexCharts;
+
 /* Sneat Core */
+
 import "../sneat/js/helpers.js";
 import "../sneat/js/config.js";
 import "../sneat/js/menu.js";
