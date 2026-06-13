@@ -11,6 +11,8 @@
     <div class="container-fluid">
         <div class="row g-4">
 
+            @include('components.extract-button')
+
             {{-- Welcome Card --}}
             <div class="col-12">
                 <div class="card border-0 shadow-sm b text-app-gray overflow-hidden">

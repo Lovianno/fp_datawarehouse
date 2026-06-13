@@ -52,8 +52,8 @@
                 </a>
             </li>
             <!-- Produk -->
-            <li class="menu-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
-                <a href="{{ route('dashboard') }}" class="menu-link text-decoration-none">
+            <li class="menu-item {{ request()->routeIs('produk.*') ? 'active' : '' }}">
+                <a href="{{ route('produk.index') }}" class="menu-link text-decoration-none">
                     <i class="menu-icon tf-icons bi bi-box-seam"></i>
                     <div>Data Produk</div>
                 </a>

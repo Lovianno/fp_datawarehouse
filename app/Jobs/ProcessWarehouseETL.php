@@ -39,7 +39,7 @@ class ProcessWarehouseETL implements ShouldQueue
             $table->string('nama_pelanggan');
             $table->unsignedBigInteger('id_produk');
             $table->string('nama_produk');
-            $table->integer('kuantitas');
+            $table->integer('jumlah');
             $table->decimal('total_harga', 15, 2);
             $table->timestamp('created_at');
         });
@@ -48,8 +48,8 @@ class ProcessWarehouseETL implements ShouldQueue
     private function extractAndTransformToStaging(): void
     {
         DB::statement("
-            INSERT INTO temp_staging_penjualan (id_pelanggan, nama_pelanggan, id_produk, nama_produk, kuantitas, total_harga, created_at)
-            SELECT p.id_pelanggan, pl.nama_pelanggan, p.id_produk, pr.nama_produk, p.kuantitas, p.total_harga, p.created_at
+            INSERT INTO temp_staging_penjualan (id_pelanggan, nama_pelanggan, id_produk, nama_produk, jumlah, total_harga, created_at)
+            SELECT p.id_pelanggan, pl.nama_pelanggan, p.id_produk, pr.nama_produk, p.jumlah, p.total_harga, p.created_at
             FROM penjualan p
             JOIN pelanggan pl ON p.id_pelanggan = pl.id_pelanggan
             JOIN produk pr ON p.id_produk = pr.id_produk
@@ -62,31 +62,31 @@ class ProcessWarehouseETL implements ShouldQueue
 
         // Sync Dimensi Pelanggan
         DB::statement("
-            INSERT INTO dim_pelanggan (id_pelanggan, kode_pelanggan, nama_pelanggan, created_at, updated_at)
-            SELECT DISTINCT id_pelanggan, kode_pelanggan, nama_pelanggan, ?, ?, ? FROM temp_staging_penjualan
-            ON DUPLICATE KEY UPDATE kode_pelanggan = VALUES(kode_pelanggan), nama_pelanggan = VALUES(nama_pelanggan), updated_at = ?
+            INSERT INTO dim_pelanggan (id_pelanggan, kode_pelanggan, nama_pelanggan, jenis_kelamin, kota, created_at, updated_at)
+            SELECT DISTINCT id_pelanggan, kode_pelanggan, nama_pelanggan, jenis_kelamin, kota, ?, ? FROM pelanggan
+            ON DUPLICATE KEY UPDATE kode_pelanggan = VALUES(kode_pelanggan), nama_pelanggan = VALUES(nama_pelanggan), jenis_kelamin = VALUES(jenis_kelamin), kota = VALUES(kota), updated_at = ?
         ", [$now, $now, $now]);
 
         // Sync Dimensi Produk
         DB::statement("
             INSERT INTO dim_produk (id_produk, kode_produk, nama_produk, kategori, harga, created_at, updated_at)
-            SELECT DISTINCT id_produk, kode_produk, nama_produk, kategori, harga, ?, ? FROM temp_staging_penjualan
+            SELECT DISTINCT id_produk, kode_produk, nama_produk, kategori, harga, ?, ? FROM produk
             ON DUPLICATE KEY UPDATE kategori = VALUES(kategori), harga = VALUES(harga), updated_at = ?
         ", [$now, $now, $now]);
 
         // Sync Dimensi Waktu
         DB::statement("
-            INSERT IGNORE INTO dim_waktu (id_waktu, tanggal, hari, bulan, tahun, created_at, updated_at)
+            INSERT IGNORE INTO dim_waktu (id_waktu, tanggal, tahun, bulan, bulan_nama, kuartal, created_at, updated_at)
             SELECT DISTINCT 
-                DATE_FORMAT(created_at, '%Y%m%d'), DATE(created_at), DAY(created_at), MONTH(created_at), YEAR(created_at), ?, ?
-            FROM temp_staging_penjualan
+                DATE_FORMAT(created_at, '%Y%m%d'), DATE(created_at), YEAR(created_at), MONTH(created_at), MONTHNAME(created_at), CEIL(MONTH(created_at) / 3), ?, ?
+            FROM penjualan
         ", [$now, $now]);
 
         // Sync Tabel Fakta Penjualan
         DB::statement("
             INSERT INTO fact_penjualan (id_pelanggan, id_produk, id_waktu, jumlah, harga_satuan, total_harga, created_at, updated_at)
             SELECT id_pelanggan, id_produk, DATE_FORMAT(created_at, '%Y%m%d'), jumlah, harga_satuan, total_harga, ?, ?
-            FROM temp_staging_penjualan
+            FROM penjualan
             ON DUPLICATE KEY UPDATE jumlah = VALUES(jumlah), harga_satuan = VALUES(harga_satuan), total_harga = VALUES(total_harga), updated_at = ?
         ", [$now, $now, $now]);
     }
