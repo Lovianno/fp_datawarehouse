@@ -76,17 +76,18 @@ class ProcessWarehouseETL implements ShouldQueue
 
         // Sync Dimensi Waktu
         DB::statement("
-            INSERT IGNORE INTO dim_waktu (id_waktu, tanggal, tahun, bulan, bulan_nama, kuartal, created_at, updated_at)
+            INSERT IGNORE INTO dim_waktu (tanggal, tahun, bulan, bulan_nama, kuartal, created_at, updated_at)
             SELECT DISTINCT 
-                DATE_FORMAT(created_at, '%Y%m%d'), DATE(created_at), YEAR(created_at), MONTH(created_at), MONTHNAME(created_at), CEIL(MONTH(created_at) / 3), ?, ?
+                DATE(created_at), YEAR(created_at), MONTH(created_at), MONTHNAME(created_at), CEIL(MONTH(created_at) / 3), ?, ?
             FROM penjualan
         ", [$now, $now]);
 
         // Sync Tabel Fakta Penjualan
         DB::statement("
             INSERT INTO fact_penjualan (id_pelanggan, id_produk, id_waktu, jumlah, harga_satuan, total_harga, created_at, updated_at)
-            SELECT id_pelanggan, id_produk, DATE_FORMAT(created_at, '%Y%m%d'), jumlah, harga_satuan, total_harga, ?, ?
-            FROM penjualan
+            SELECT p.id_pelanggan, p.id_produk, dw.id_waktu, p.jumlah, p.harga_satuan, p.total_harga, ?, ?
+            FROM penjualan p
+            JOIN dim_waktu dw ON dw.tanggal = DATE(p.created_at)
             ON DUPLICATE KEY UPDATE jumlah = VALUES(jumlah), harga_satuan = VALUES(harga_satuan), total_harga = VALUES(total_harga), updated_at = ?
         ", [$now, $now, $now]);
     }

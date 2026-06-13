@@ -15,10 +15,10 @@ class DatabaseSeeder extends Seeder
             PenjualanSeeder::class,
 
             // OLAP Dimension & Fact Tables
-            DimPelangganSeeder::class,
-            DimWaktuSeeder::class,
-            DimProdukSeeder::class,
-            FactPenjualanSeeder::class,
+            // DimPelangganSeeder::class,
+            // DimWaktuSeeder::class,
+            // DimProdukSeeder::class,
+            // FactPenjualanSeeder::class,
         ]);
     }
 }
