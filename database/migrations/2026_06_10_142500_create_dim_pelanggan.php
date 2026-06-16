@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('dim_pelanggan', function (Blueprint $table) {
             $table->id('id_pelanggan');
+            $table->integer('id_pelanggan_asli')->unique();
             $table->string('kode_pelanggan');
             $table->string('nama_pelanggan');
             $table->enum('jenis_kelamin', ['L', 'P']);

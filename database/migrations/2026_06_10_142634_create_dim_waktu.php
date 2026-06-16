@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('dim_waktu', function (Blueprint $table) {
             $table->id('id_waktu');
-            $table->date('tanggal');
+            $table->date('tanggal')->unique();
             $table->integer('tahun');
             $table->integer('bulan');
             $table->string('bulan_nama');

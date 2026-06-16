@@ -20,6 +20,8 @@ return new class extends Migration
             $table->decimal('harga_satuan', 10, 2);
             $table->decimal('total_harga', 10, 2);
             $table->timestamps();
+
+            $table->unique(['id_pelanggan', 'id_produk', 'id_waktu'], 'fact_penjualan_unique');
         });
     }
 
