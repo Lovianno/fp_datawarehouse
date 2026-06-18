@@ -10,9 +10,7 @@ use App\Http\Controllers\WarehouseController;
 
 // Routes akan ditambahkan di sini
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
